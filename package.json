@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/theprattler/ten-tremendous-tacos/issues"
   },
-  "homepage": "https://github.com/theprattler/ten-tremendous-tacos#readme"
+  "homepage": "https://github.com/theprattler/ten-tremendous-tacos#readme",
+  "devDependencies": {
+    "jest": "^27.4.5"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.0"
+  }
 }
