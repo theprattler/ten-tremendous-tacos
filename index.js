@@ -5,11 +5,19 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
-const managerQuestions = [
+const team = [];
+
+const memberQuestions = [
+    {
+        type: 'list',
+        name: 'role',
+        message: "What is this person's role?",
+        choices: ['Manager', 'Engineer', 'Intern']
+    },
     {
         type: 'text',
         name: 'name',
-        message: "What is the Team Manager's Name?",
+        message: `What is this ${this.role}'s Name?`,
         validate: nameInput => {
             if (nameInput) {
                 return true;
@@ -45,7 +53,7 @@ const managerQuestions = [
             }
         }
     },
-    {
+    /*{
         type: 'input',
         name: 'officeNumber',
         message: `What is their Office Number?`,
@@ -63,10 +71,10 @@ const managerQuestions = [
         name: 'confirmAddMember',
         message: 'Would you like to add another member?',
         choices: ['Yes', "I'm finished building my team"]
-    }
+    }*/
 ]
 
-const genericQuestions = [
+/*const genericQuestions = [
     {
         type: 'list',
         name: 'role',
@@ -111,29 +119,51 @@ const genericQuestions = [
                 return false;
             }
         }
-    }
-]
+    },
+]*/
 
-const team = [];
-const generateTeam = () => {
-
+const generatorBanner = () => {
     console.log(`
     ======================
     TEAM PROFILE GENERATOR
     ======================
     `);
+};
+
+
+const generateTeam = () => {
+
+    console.log(`
+    ===============
+    NEW TEAM MEMBER
+    ===============
+    `);
 
     inquirer
-    .prompt(managerQuestions)
-    .then((profile) => {
+    .prompt(memberQuestions)
+    /*.then((profile) => {
         const manager = new Manager(profile.name, profile.id, profile.email, profile.officeNumber, profile.role);
         team.push(manager);
-        console.log(manager);
-        inquirer
-        .prompt(genericQuestions)
+        console.log(manager);*/
+        //inquirer
+        //.prompt(genericQuestions)
         .then((roleQuestion) => {
             inquirer
             .prompt([
+                {
+                    when: () => roleQuestion.role === 'Manager',
+                    type: 'input',
+                    name: 'officeNumber',
+                    message: 'Please enter their Office Number:',
+                    validate: officeNumberInput => {
+                        if (officeNumberInput) {
+                            return true;
+                        } else {
+                            console.log('We promise we will not egg their desk!');
+                            return false;
+                        }
+                    }
+                },
                 {
                     when: () => roleQuestion.role === 'Engineer',
                     type: 'input',
@@ -157,51 +187,53 @@ const generateTeam = () => {
                         if (schoolInput) {
                             return true;
                         } else {
-                            console.log(`${this.name} has a life outside of this team!`);
+                                console.log(`${this.name} has a life outside of this team!`);
                             return false;
                         }
                     }
                 },
                 {
-                    when: () => (roleQuestion.role === 'Engineer' || roleQuestion.role === 'Intern'),
-                    type: 'list',
+                    
+                    type: 'confirm',
                     name: 'confirmAddMember',
-                    message: 'Would you like to add another member?',
-                    choices: ['Yes', "I'm finished building my team"]
+                    message: 'Would you like to add another member to the team?'
+                    
                 }
-                
-
             ])
             .then((roleAnswer) => {
+                if (roleQuestion.role === 'Manager') {
+                    const manager = new Manager(roleQuestion.name, roleQuestion.id, roleQuestion.email, roleAnswer.officeNumber, roleQuestion.role);
+                    team.push(manager);
+                    //console.log(manager);
+                }  
                 if (roleQuestion.role === 'Engineer') {
                     const engineer = new Engineer(roleQuestion.name, roleQuestion.id, roleQuestion.email, roleAnswer.github, roleQuestion.role);
                     team.push(engineer);
-                    console.log(engineer);
-                    console.log(team);
+                    //console.log(engineer);
+                    //console.log(team);
                 }
                 if (roleQuestion.role === 'Intern') {
                     const intern = new Intern(roleQuestion.name, roleQuestion.id, roleQuestion.email, roleAnswer.school, roleQuestion.role);
                     team.push(intern);
-                    console.log(intern);
-                    console.log(team);
+                    //console.log(intern);
+                    //console.log(team);
                 }
-                if (roleAnswer.confirmAddMember === 'Yes') {
-                    generateTeam(genericQuestions);
+                if (roleAnswer.confirmAddMember) {
+                    generateTeam();
                 } else {
                     team.forEach((team) => {
                         console.log(team);
                     });
                 }
-            })
+            });
         })
-    })
-    
-}
+    };
+//};
 
 
 
 
-
+generatorBanner();
 generateTeam();
 /*
 function Team() {
