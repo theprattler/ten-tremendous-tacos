@@ -55,7 +55,6 @@ const memberQuestions = [
             }
         }
     },
-    
 ]
 
 const generatorBanner = () => {

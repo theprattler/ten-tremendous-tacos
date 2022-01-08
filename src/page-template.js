@@ -28,7 +28,7 @@ const generateEngineer = engineerData => {
     <section class="card">
       <ul>
         <li>
-          <h2 id="card-title-name">${engineerData.name}:</h2>
+          <h2 id="card-title-name">${engineerData.name}</h2>
           <h2>${engineerData.role}</h2>
         </li>
         <li class="card-list-data">
@@ -53,7 +53,7 @@ const generateIntern = internData => {
     <section class="card">
       <ul>
         <li>
-          <h2 id="card-title-name">${internData.name}:</h2>
+          <h2 id="card-title-name">${internData.name}</h2>
           <h2>${internData.role}</h2>
         </li>
         <li class="card-list-data">
@@ -71,7 +71,6 @@ const generateIntern = internData => {
 };
 
 module.exports = templateData => {
-  console.log(templateData);
   return `
   <!DOCTYPE html>
   <html lang="en">
