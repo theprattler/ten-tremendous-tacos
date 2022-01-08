@@ -1,16 +1,21 @@
 const generateManager = managerData => {
   return `
-    <section>
-    ${managerData
-      .map(({ name, id, email, officeNumber }) => {
-        return `
-        <h2>Manager:${name}</h2>
-        <h3>ID:${id}</h3>
-        <h3>Email:${email}</h3>
-        <h3>:Office Number:${officeNumber}</h3>
-        `;
-      })
-    }
+    <section class="card">
+      <ul>
+        <li>
+          <h2 id="card-title-name">${managerData.name}</h2>
+          <h2>${managerData.role}</h2>
+        </li>
+        <li class="card-list-data">
+          <h3>ID: <span>${managerData.id}</span></h3>
+        </li>
+        <li class="card-list-data">
+          <h3>Email: <span><a href="mailto:${managerData.email}">${managerData.email}</a></span></h3>
+        </li>
+        <li class="card-list-data">
+          <h3>Office Number: <span>${managerData.officeNumber}</span></h3>
+        </li>
+      </ul>
     </section>
   `;
 };
@@ -20,17 +25,22 @@ const generateEngineer = engineerData => {
     return '';
   }
   return `
-    <section>
-    ${engineerData
-      .map(({ name, id, email, github }) => {
-        return `
-        <h2>Engineer:${name}</h2>
-        <h3>ID:${id}</h3>
-        <h3>Email:${email}</h3>
-        <h3>GitHub:${github}</h3>
-        `;
-      })
-    }
+    <section class="card">
+      <ul>
+        <li>
+          <h2 id="card-title-name">${engineerData.name}:</h2>
+          <h2>${engineerData.role}</h2>
+        </li>
+        <li class="card-list-data">
+          <h3>ID: <span>${engineerData.id}</span></h3>
+        </li>
+        <li class="card-list-data">
+          <h3>Email: <span><a href="mailto:${engineerData.email}">${engineerData.email}</a></span></h3>
+        </li>
+        <li class="card-list-data">
+          <h3>GitHub: <span><a href="https://www.github.com/${engineerData.github}">${engineerData.github}</a></span></h3>
+        </li>
+      </ul>
     </section>
   `;
 };
@@ -40,24 +50,28 @@ const generateIntern = internData => {
     return '';
   }
   return `
-    <section>
-    ${internData
-      .map(({ name, id, email, school }) => {
-        return `
-        <h2>Intern:${name}</h2>
-        <h3>ID:${id}</h3>
-        <h3>Email:${email}</h3>
-        <h3>School:${school}</h3>
-        `;
-      })
-    }
+    <section class="card">
+      <ul>
+        <li>
+          <h2 id="card-title-name">${internData.name}:</h2>
+          <h2>${internData.role}</h2>
+        </li>
+        <li class="card-list-data">
+          <h3>ID: <span>${internData.id}</span></h3>
+        </li>
+        <li class="card-list-data">
+          <h3>Email: <span><a href="mailto:${internData.email}">${internData.email}</a></span></h3>
+        </li>
+        <li class="card-list-data">
+          <h3>School: <span>${internData.school}</span></h3>
+        </li>
+      </ul>
     </section>
   `;
 };
 
 module.exports = templateData => {
-  const { manager, engineer, intern } = templateData;
-
+  console.log(templateData);
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -76,9 +90,9 @@ module.exports = templateData => {
       </div>
     </header>
     <main>
-      ${generateManager(manager)}
-      ${generateEngineer(engineer)}
-      ${generateIntern(intern)}
+      ${generateManager(templateData[0])}
+      ${generateEngineer(templateData[1])}
+      ${generateIntern(templateData[2])}
     </main>
   </body>
   </html>

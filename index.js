@@ -5,7 +5,7 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const templateData = require('./src/page-template');
-const writeFile = require('./utils/generate-site');
+const { writeFile, copyFile } = require('./utils/generate-site');
 
 const team = [];
 
@@ -142,18 +142,24 @@ const generateTeam = () => {
             }
             if (roleAnswer.confirmAddMember) {
                 generateTeam();
+                return team;
             } else {
-                team.forEach((team) => {
-                    console.log(team);
-                });
+                return team;
             }
         })
-        /*.then(teamData => {
+        .then(teamData => {
             return templateData(teamData);
         })
         .then(pageHTML => {
             return writeFile(pageHTML);
-        })*/
+        })
+        .then(writeFileResponse => {
+            console.log(writeFileResponse);
+            return copyFile();
+        })
+        .then(copyFileResponse => {
+            console.log(copyFileResponse);
+        })
         .catch((err) => {
             if (err) {
                 throw err;
